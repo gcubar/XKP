@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<com.xkp.android.<xss:e value="appName"/>.XKPLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android" 
+	xmlns:xkp="http://schemas.android.com/apk/res/com.xkp.android.<xss:e value="appName"/>" 
+	android:id="@+id/mainApplication" 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
@@ -13,16 +15,32 @@
 			out(indent = 1)
 			{
 				<<xss:e value="inst.import"/> android:id="@+id/<xss:e value="inst.id"/>" 
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
 			}
 			for(var prop in inst.properties)
 			{
-				if(prop.android_layout_name)
+				string assignValue;
+				
+				if(prop.res_type == "dimension")
+				{
+					assignValue = prop.value + "px";
+				}
+				else
+				if(prop.dim_res)
+				{
+					// prop.resourceName come from stringValues.xml.xss 
+					// that is assigned with the correspond name
+					assignValue = "@string/" + prop.resourceName;
+				}
+				else
+				{
+					assignValue = prop.value;
+				}
+				
+				if(prop.value != null)
 				{
 					out(indent = 2)
 					{
-						android:<xss:e value="prop.android_layout_name"/>="@string/<xss:e value="prop.resourceName"/>"
+						<xss:e value="prop.ns"/>:<xss:e value="prop.android_layout_name"/>="<xss:e value="assignValue"/>"
 					}
 				}
 			}
@@ -33,4 +51,4 @@
 		}
 	}
 </xss:code>
-</LinearLayout>
+</com.xkp.android.<xss:e value="appName"/>.XKPLayout>

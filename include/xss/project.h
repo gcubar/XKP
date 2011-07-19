@@ -41,6 +41,7 @@ class xss_project : public boost::enable_shared_from_this<xss_project>
 			void compile_ast(xs_container& ast, XSSContext ctx);
       void register_instance(const str& id, XSSObject instance);
       void render_instance(XSSObject instance, const str& xss, int indent);
+      void dispatch_console_error(str id, str desc, str other1 = "", str other2 = "");
       str  resolve_dispatcher(XSSObject instance, const str& event_name);
       str  instance_class(XSSObject instance);
       str  inline_properties(XSSObject instance);
@@ -194,6 +195,7 @@ struct xss_project_schema : object_schema<xss_project>
 				method_<void,			2>("compile_instance",    &xss_project::compile_instance);
         method_<void,			2>("register_instance",   &xss_project::register_instance);
         method_<void,			3>("render_instance",     &xss_project::render_instance);
+        method_<void,     4>("xss_throw",           &xss_project::dispatch_console_error);
         method_<str,			2>("resolve_dispatcher",  &xss_project::resolve_dispatcher);
         method_<str,			1>("instance_class",      &xss_project::instance_class);
 				method_<str,			1>("inline_properties",   &xss_project::inline_properties);

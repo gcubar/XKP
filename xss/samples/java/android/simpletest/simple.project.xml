@@ -4,8 +4,14 @@
           source_path=""
           output_path="../../../../production/android/"/>
 
-    <options gen_event_method="false"
-	         eclipse_project="true"/>
+	<!--
+		. eclipse_project option declare the structure of project exported
+		. targetSdkVersion is a SDK version of exported Android project
+	-->
+	
+    <options gen_event_method="false" 
+	         eclipse_project="true" 
+			 targetSdkVersion="8"/> 
 
     <idiom class="java-idiom"/>
 	

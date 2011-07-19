@@ -6,8 +6,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
       package="com.xkp.android.<xss:e value="appName"/>"
 	  android:versionCode="1"
-	  android:versionName="1.0"
-	  android:installLocation="auto">
+	  android:versionName="1.0">
 
     <uses-sdk android:minSdkVersion="<xss:e value="sdkVersion-1"/>" android:targetSdkVersion="<xss:e value="sdkVersion"/>"/>
 

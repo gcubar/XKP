@@ -2,23 +2,19 @@
 	string appName = "SimpleTest";
 	string outputPath = compiler.path.system_complete;
 	array<object> allResources = [];
-	int sdkVersion = 8;
+	int sdkVersion = compiler.options.targetSdkVersion;
 	int resCounter = 0;
 	
 	//if this array is not initialized then make a console error: "Trying to access null object"
 	//array<string> imports;
 	array<string> imports = [];
 	
-	//i don't remember how it's define and declare object
-	//object options = [object(eclipse_project = true)];
-	bool eclipse_project = true;
-	
 	for(var inst in instances)
 	{
 		if(inst.import)
 		{
 			//live is hard; :)
-			//it's necessary to implement vector, stack, queue and set containers
+			//it's necessary to implement vector, stack, queue and set containers in vm
 			bool found = false;
 			for(var imp in imports)
 			{
@@ -46,6 +42,10 @@
 			<parameter name="imports" access="read"/>
 		</xss:file>
 		
+		<xss:file output="src/com/xkp/android/SimpleTest/XKPLayout.java" src="xkpLayout.java.xss">
+			<parameter name="appName" access="read"/>
+		</xss:file>
+		
 		<xss:file output="res/values/strings.xml" src="stringValues.xml.xss">
 			<parameter name="appName" access="read"/>
 			<parameter name="resCounter" access="read_write"/>
@@ -66,6 +66,9 @@
 	
 	if(compiler.options.eclipse_project)
 	{
+		//example of xss_throw
+		//compiler.xss_throw("eclipse_project", "it's not necessary", "'other_1'", "'other_2'");
+		
 		//copy .project and .classpath files to output_path
 	}
 

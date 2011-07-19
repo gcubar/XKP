@@ -1864,7 +1864,24 @@ void xss_project::render_instance(XSSObject instance, const str& xss, int indent
 		current_->append(result);
 
 		pop_file();
-}
+  }
+
+void xss_project::dispatch_console_error(str id, str desc, str other1, str other2)
+  {
+    if (id.empty() || desc.empty())
+      return;
+
+    param_list error;
+    error.add("id", id);
+    error.add("desc", desc);
+
+    if (!other1.empty())
+      error.add("other1", other1);
+    if (!other2.empty())
+      error.add("other2", other2);
+
+    xss_throw(error);
+  }
 
 str xss_project::resolve_dispatcher(XSSObject instance, const str& event_name)
   {

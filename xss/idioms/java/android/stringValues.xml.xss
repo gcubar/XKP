@@ -13,7 +13,7 @@
 	{
 		for(var prop in inst.properties)
 		{
-			if(prop.resource)
+			if(prop.res_type == "string")
 			{
 				string strResName = "res" + resCounter++ as string;
 				object auxObj = object(

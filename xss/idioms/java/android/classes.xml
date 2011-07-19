@@ -7,35 +7,69 @@
 	
 	<class id="widget">
 		<properties>
+			<property name="x" android_layout_name="layout_x" ns="xkp" type="int" res_type="dimension"/>
+			<property name="y" android_layout_name="layout_y" ns="xkp" type="int" res_type="dimension"/>
+			
 			<!-- fill_parent, match_parent, wrap_content-->
-			<property name="layout_width" type="enum"/>
-			<property name="layout_height" type="enum"/>
+			<property name="width" android_layout_name="layout_width" ns="android" type="int" res_type="dimension"/>
+			<property name="height" android_layout_name="layout_height" ns="android" type="int" res_type="dimension"/>
+			
+			<property name="placement" android_layout_name="placement" ns="xkp" type="enum"/>
+			
+			<property name="autosize_x" android_layout_name="autosize_x" ns="xkp" type="bool"/>
+			<property name="autosize_y" android_layout_name="autosize_y" ns="xkp" type="bool"/>
 			
 			<!-- top, bottom, left, right, center_vertical, fill_vertical, center_horizontal, fill_horizontal, center, fill, clip_vertical, clip_horizontal-->
-			<property name="layout_gravity" type="enum"/>
+			<!--
+			<property name="layout_gravity" ns="android" type="enum"/>
 			
-			<property name="layout_margin" type="int"/>
-			<property name="layout_weight" type="float"/>
-			
-			<property name="width" type="int"/>
-			<property name="height" type="int"/>
+			<property name="layout_margin" ns="android" type="int"/>
+			<property name="layout_weight" ns="android" type="float"/>
+			-->
 		</properties>
 	</class>
 	
 	<class id="label" super="widget" import="TextView">
 		<properties>
-			<property name="caption" android_layout_name="text" type="string" resource="true"/>
+			<property name="caption" android_layout_name="text" ns="android" type="string" res_type="string"/>
 		</properties>
 	</class>
 	
 	<class id="button" super="widget" import="Button">
 		<properties>
-			<property name="caption" android_layout_name="text" type="string" resource="true"/>
+			<property name="caption" android_layout_name="text" ns="android" type="string" res_type="string"/>
 		</properties>
 	</class>
 	
 	<class id="editbox" super="widget" import="EditText">
 		<properties>
+		</properties>
+	</class>
+	
+	<class id="listbox" super="widget" import="ListView">
+		<properties>
+		</properties>
+	</class>
+	
+	<class id="checkbox" super="widget" import="CheckBox">
+		<properties>
+		</properties>
+	</class>
+	
+	<class id="radiobutton" super="widget" import="RadioButton">
+		<properties>
+		</properties>
+	</class>
+	
+	<class id="holder" super="widget" import="com.xkp.android.<xss:e value="appName"/>">
+	</class>
+	
+	<class id="div" super="holder">
+	</class>
+	
+	<class id="image" super="widget" import="ImageView">
+		<properties>
+			<property name="source" android_layout_name="src" ns="android" type="string" res_type="drawable"/>
 		</properties>
 	</class>
 </xml>
