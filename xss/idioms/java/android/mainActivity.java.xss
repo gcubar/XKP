@@ -7,21 +7,29 @@ import android.os.Bundle;
 	{
 		out(indent = 0)
 		{
-			import android.widget.<xss:e value="imp"/>;
+            import android.widget.<xss:e value="imp"/>;
 		}
 	}
 </xss:code>
 
-public class ActSimpleTest extends Activity
+public class ActSimpleTest 
+                extends Activity
+<xss:code>
+	//TODO: add here the interface of component/view events
+</xss:code>
+				
 {
 <xss:code>
 	for(var inst in instances)
 	{
+		if(inst.import == null)
+			continue;
+		
 		if(inst.id && inst.id != "application")
 		{
 			out(indent = 1)
 			{
-				private <xss:e value="inst.import"/> priv<xss:e value="inst.id"/>;
+                private <xss:e value="inst.import"/> priv_<xss:e value="inst.id"/>;
 			}
 		}
 	}
@@ -33,18 +41,36 @@ public class ActSimpleTest extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+		bindViews();
+	}
 	
-<xss:code>	
-		for(var inst in instances)
+	private void bindViews() {
+<xss:code>
+	for(var inst in instances)
+	{
+		if(inst.import == null)
+			continue;
+		
+		if(inst.id && inst.id != "application")
 		{
-			if(inst.id && inst.id != "application")
+			out(indent = 2)
 			{
-				out(indent = 2)
-				{
-					priv<xss:e value="inst.id"/> = (<xss:e value="inst.import"/>) findViewById(R.id.<xss:e value="inst.id"/>);
-				}
+				priv_<xss:e value="inst.id"/> = (<xss:e value="inst.import"/>) findViewById(R.id.<xss:e value="inst.id"/>);
 			}
 		}
+	}
+</xss:code>
+
+<xss:code>
 </xss:code>
     }
+	
+<xss:code>
+	if(true)
+	{
+		//TODO: if exists onClick events add a method with a switch structure
+		//      and in each case a call of correspond method, 
+		//      then implement methods with translated codes.
+	}
+</xss:code>
 }

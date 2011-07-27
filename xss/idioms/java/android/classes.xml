@@ -1,23 +1,36 @@
 <xml>
 	<class id="application">
 		<properties>
-			<property name="title" type="string"/>
+			<property name="title" nolayout="true" type="string"/>
+		</properties>
+	</class>
+	
+	<class id="Placement" enum="true" as_expression="true" internal_id="int" default_value="none">
+		<properties>
+			<property name="none" internal_id="PL_NONE"/>
+			<property name="top" internal_id="PL_TOP"/>
+			<property name="left" internal_id="PL_LEFT"/>
+			<property name="right" internal_id="PL_RIGHT"/>
+			<property name="bottom" internal_id="PL_BOTTOM"/>
+			<property name="client" internal_id="PL_CLIENT"/>
+			<property name="center" internal_id="PL_CENTER"/>
 		</properties>
 	</class>
 	
 	<class id="widget">
 		<properties>
-			<property name="x" android_layout_name="layout_x" ns="xkp" type="int" res_type="dimension"/>
-			<property name="y" android_layout_name="layout_y" ns="xkp" type="int" res_type="dimension"/>
+			<property name="x" layout_name="layout_x" ns="xkp" type="int" res_type="dimension"/>
+			<property name="y" layout_name="layout_y" ns="xkp" type="int" res_type="dimension"/>
 			
-			<!-- fill_parent, match_parent, wrap_content-->
-			<property name="width" android_layout_name="layout_width" ns="android" type="int" res_type="dimension"/>
-			<property name="height" android_layout_name="layout_height" ns="android" type="int" res_type="dimension"/>
+			<!-- fill_parent == match_parent and wrap_content  -->
+			<!-- fill_parent is deprecated after android api 8 -->
+			<property name="width" layout_name="layout_width" default_value="wrap_content" ns="android" type="int" res_type="dimension"/>
+			<property name="height" layout_name="layout_height" default_value="wrap_content" ns="android" type="int" res_type="dimension"/>
 			
-			<property name="placement" android_layout_name="placement" ns="xkp" type="enum"/>
+			<property name="placement" layout_name="placement" ns="xkp" type="enum"/>
 			
-			<property name="autosize_x" android_layout_name="autosize_x" ns="xkp" type="bool"/>
-			<property name="autosize_y" android_layout_name="autosize_y" ns="xkp" type="bool"/>
+			<property name="autosize_x" layout_name="autosize_x" ns="xkp" type="bool"/>
+			<property name="autosize_y" layout_name="autosize_y" ns="xkp" type="bool"/>
 			
 			<!-- top, bottom, left, right, center_vertical, fill_vertical, center_horizontal, fill_horizontal, center, fill, clip_vertical, clip_horizontal-->
 			<!--
@@ -31,14 +44,17 @@
 	
 	<class id="label" super="widget" import="TextView">
 		<properties>
-			<property name="caption" android_layout_name="text" ns="android" type="string" res_type="string"/>
+			<property name="caption" layout_name="text" ns="android" type="string" res_type="str_reference"/>
 		</properties>
 	</class>
 	
 	<class id="button" super="widget" import="Button">
 		<properties>
-			<property name="caption" android_layout_name="text" ns="android" type="string" res_type="string"/>
+			<property name="caption" layout_name="text" ns="android" type="string" res_type="str_reference"/>
 		</properties>
+		<events>
+			<event name="click" event_name="onClick" interface="OnClickListener"/>
+		</events>
 	</class>
 	
 	<class id="editbox" super="widget" import="EditText">
@@ -61,15 +77,31 @@
 		</properties>
 	</class>
 	
-	<class id="holder" super="widget" import="com.xkp.android.<xss:e value="appName"/>">
+	<class id="holder" super="widget" internal="true" import="XKPLayout">
 	</class>
 	
 	<class id="div" super="holder">
 	</class>
 	
-	<class id="image" super="widget" import="ImageView">
+	<class id="switcher" super="widget" internal="true" import="XKPSwitcher">
 		<properties>
-			<property name="source" android_layout_name="src" ns="android" type="string" res_type="drawable"/>
+			<property name="active" layout_name="current" ns="xkp" type="string" res_type="id_reference"/>
+			<property name="active_index" layout_name="currentIndex" ns="xkp" type="int"/>
 		</properties>
 	</class>
+	
+	<class id="replicator" super="widget" internal="true" import="XKPReplicator">
+		<properties>
+			<property name="template" layout_name="template" ns="xkp" type="string" res_type="id_reference"/>
+			<property name="items" layout_name="items" ns="xkp" type="array"/>
+		</properties>
+	</class>
+	
+	<class id="image" super="widget" import="ImageView">
+		<properties>
+			<property name="source" layout_name="src" ns="android" type="string" res_type="drawable"/>
+		</properties>
+	</class>
+	
+	<class id="object"/>
 </xml>

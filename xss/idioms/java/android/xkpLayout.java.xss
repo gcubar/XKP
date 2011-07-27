@@ -29,7 +29,7 @@ public class XKPLayout extends ViewGroup {
 	private static final int PL_MIN_VALUE = 0;
 	private static final int PL_MAX_VALUE = 7;
 	
-	private XKPLayout.LayoutParams xkplp;
+	private XKPLayout.LayoutParams mXKPLayoutParams;
 	
 	public XKPLayout(Context context) {
 		super(context);
@@ -37,12 +37,12 @@ public class XKPLayout extends ViewGroup {
 
 	public XKPLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		xkplp = (XKPLayout.LayoutParams) generateLayoutParams(attrs);
+		mXKPLayoutParams = (XKPLayout.LayoutParams) generateLayoutParams(attrs);
 	}
 
 	public XKPLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		xkplp = (XKPLayout.LayoutParams) generateLayoutParams(attrs);
+		mXKPLayoutParams = (XKPLayout.LayoutParams) generateLayoutParams(attrs);
 	}
 
     @Override
@@ -64,13 +64,19 @@ public class XKPLayout extends ViewGroup {
 				XKPLayout.LayoutParams lp
 					= (XKPLayout.LayoutParams) child.getLayoutParams();
 		
+				// update origins dimensions 
+				if (lp.origins.right < 0)
+					lp.origins.right = lp.origins.left + child.getMeasuredWidth();
+				if (lp.origins.bottom < 0)
+					lp.origins.bottom = lp.origins.top + child.getMeasuredHeight();
+				
 		        int childWidth = lp.origins.width();
 		        int childHeight = lp.origins.height();
 		        
 				Log.i("XKPLayout", "onMeasure => " + lp.placement);
 				Log.i("XKPLayout", "onMeasure => l:" + lp.origins.left + " t:" + lp.origins.top +
 						" r:" + lp.origins.right + " b:" + lp.origins.bottom);
-
+		        
 				switch (lp.placement)
 				{
 				case PL_NONE:
@@ -79,6 +85,7 @@ public class XKPLayout extends ViewGroup {
 					lp.x = lp.origins.left;
 					lp.y = lp.origins.top;
 					break;
+					
 				case PL_TOP:
 					childWidth = bounds.width();
 					childHeight = lp.origins.height();
@@ -86,6 +93,7 @@ public class XKPLayout extends ViewGroup {
 					lp.y = bounds.top;
 					bounds.top += childHeight;
 					break;
+					
 				case PL_BOTTOM:
 					childWidth = bounds.width();
 					childHeight = lp.origins.height();
@@ -93,6 +101,7 @@ public class XKPLayout extends ViewGroup {
 					lp.y = bounds.bottom - childHeight;
 					bounds.bottom -= childHeight;
 					break;
+					
 				case PL_LEFT:
 					childWidth = lp.origins.width();
 	                childHeight = bounds.height();
@@ -100,6 +109,7 @@ public class XKPLayout extends ViewGroup {
 					lp.y = bounds.top;
 					bounds.left += childWidth;
 	                break;
+	                
 				case PL_RIGHT:
 					childWidth = lp.origins.width();
 	                childHeight = bounds.height();
@@ -107,12 +117,14 @@ public class XKPLayout extends ViewGroup {
 					lp.y = bounds.top;
 					bounds.right -= childWidth;
 					break;
+					
 				case PL_CLIENT:
 					childWidth = bounds.width();
 	                childHeight = bounds.height();
 					lp.x = bounds.left;
 					lp.y = bounds.top;
 	                break;
+	                
 				case PL_CENTER:
 					childWidth = lp.origins.width();
 	                childHeight = lp.origins.height();
@@ -125,13 +137,13 @@ public class XKPLayout extends ViewGroup {
 						MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY), 
 						MeasureSpec.makeMeasureSpec(childHeight, MeasureSpec.EXACTLY));
 				
-				if (xkplp.autosize_x) {
+				if (mXKPLayoutParams.autosize_x) {
 					if (bounds.left + child.getWidth() > widthLayout) {
 						maxWidth = Math.max(maxWidth, bounds.left + child.getWidth());
 					}
 				}
 				
-				if (xkplp.autosize_y) {
+				if (mXKPLayoutParams.autosize_y) {
 					if (bounds.top + child.getHeight() > heightLayout) {
 						maxHeight = Math.max(maxHeight, bounds.top + child.getHeight());
 					}
@@ -206,10 +218,19 @@ public class XKPLayout extends ViewGroup {
 		return p instanceof XKPLayout.LayoutParams;
 	}
 	
+	//@Override
+	//protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+	//	return new LayoutParams(p);
+	//}
+	
 	@Override
 	protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-		return new LayoutParams(p);
+		return new LayoutParams( (XKPLayout.LayoutParams)p );
 	}
+	
+	//protected XKPLayout.LayoutParams generateLayoutParams(XKPLayout.LayoutParams p) {
+	//	return new LayoutParams(p);
+	//}
 	
 	/*
 	Per-child layout information associated with AbsoluteLayout.
@@ -305,12 +326,13 @@ public class XKPLayout extends ViewGroup {
 			
 			a.recycle();
 			
-			origins = new Rect(x, y, x + width, y + height);
+			origins = new Rect(x, y, width, height);
 			parentXkpLayout = layRef;
 			setPlacement(pl);
 			
 			Log.i("XKPLayout", "LayoutParams => x:" + x + " y:" + y +
 					" w:" + width + " h:" + height);
+			Log.i("XKPLayout", "LayoutParams => placement = " + pl);
 		}
 		
 		public int getPlacement() {
@@ -335,11 +357,16 @@ public class XKPLayout extends ViewGroup {
 			// update real position and dimensions
 		}
 		
-		/*
-		{@inheritDoc}
-		*/
-		public LayoutParams(ViewGroup.LayoutParams source) {
+		public LayoutParams(XKPLayout.LayoutParams source) {
 			super(source);
+			
+			x = source.x;
+			y = source.y;
+			autosize_x = source.autosize_x;
+			autosize_y = source.autosize_y;
+			placement = source.placement;
+			origins = new Rect(source.origins);
+			parentXkpLayout = source.parentXkpLayout;
 		}
 	}
 }

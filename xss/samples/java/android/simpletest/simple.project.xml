@@ -5,8 +5,12 @@
           output_path="../../../../production/android/"/>
 
 	<!--
-		. eclipse_project option declare the structure of project exported
-		. targetSdkVersion is a SDK version of exported Android project
+		DOC: 'eclipse_project' option declare the structure of project exported
+		DOC: 'targetSdkVersion' is a SDK version of exported Android project
+		
+		TODO: tab character configuration with number of spaces for resolve indent problem
+		TODO: copy files .classpath, default.properties, res/values/attrs.xml
+		TODO: create folders libs, assets, lib, gen, res/drawable-* with files
 	-->
 	
     <options gen_event_method="false" 

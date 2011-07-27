@@ -3,17 +3,18 @@
 	string outputPath = compiler.path.system_complete;
 	array<object> allResources = [];
 	int sdkVersion = compiler.options.targetSdkVersion;
+	int minSDKVersion = 4;
 	int resCounter = 0;
 	
-	//if this array is not initialized then make a console error: "Trying to access null object"
+	//ERROR: if this array is not initialized then make a console error: "Trying to access null object"
 	//array<string> imports;
 	array<string> imports = [];
 	
 	for(var inst in instances)
 	{
-		if(inst.import)
+		if(inst.import && !inst.internal)
 		{
-			//live is hard; :)
+			//TIPS: live is hard; :)
 			//it's necessary to implement vector, stack, queue and set containers in vm
 			bool found = false;
 			for(var imp in imports)
@@ -35,6 +36,7 @@
 		<xss:file output="AndroidManifest.xml" src="AndroidManifest.xml.xss">
 			<parameter name="appName" access="read"/>
 			<parameter name="sdkVersion" access="read"/>
+			<parameter name="minSDKVersion" access="read"/>
 		</xss:file>
 		
 		<xss:file output="src/com/xkp/android/SimpleTest/ActSimpleTest.java" src="mainActivity.java.xss">
@@ -43,6 +45,14 @@
 		</xss:file>
 		
 		<xss:file output="src/com/xkp/android/SimpleTest/XKPLayout.java" src="xkpLayout.java.xss">
+			<parameter name="appName" access="read"/>
+		</xss:file>
+		
+		<xss:file output="src/com/xkp/android/SimpleTest/XKPSwitcher.java" src="xkpSwitcher.java.xss">
+			<parameter name="appName" access="read"/>
+		</xss:file>
+		
+		<xss:file output="src/com/xkp/android/SimpleTest/XKPReplicator.java" src="xkpReplicator.java.xss">
 			<parameter name="appName" access="read"/>
 		</xss:file>
 		
@@ -63,13 +73,17 @@
 		</xss:file>
 	}
 	
+	if(compiler.options.targetSdkVersion <= minSDKVersion)
+	{
+		compiler.xss_throw("android configuration", "targetSdkVersion", "must be greather than " + minSDKVersion + ".");
+	}
 	
 	if(compiler.options.eclipse_project)
 	{
-		//example of xss_throw
-		//compiler.xss_throw("eclipse_project", "it's not necessary", "'other_1'", "'other_2'");
-		
-		//copy .project and .classpath files to output_path
+		//TODO: copy .project and .classpath files to output_path
+		// .project file should be change the third line on the 'name' tag
+		//ERROR: some incorrect indent don't facilitate the correct use of .project file
+		//       the big problem is with tab characters
 	}
 
 </xss:code>

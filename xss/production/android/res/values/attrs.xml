@@ -15,4 +15,15 @@
 			<enum name="PL_CENTER" value="6"/>
 		</attr>
 	</declare-styleable>
+	
+	<declare-styleable name="XKPSwitcher">
+		<attr name="current" format="reference"/>
+		<attr name="currentIndex" format="integer"/>
+	</declare-styleable>
+	
+	<declare-styleable name="XKPReplicator">
+		<attr name="template" format="reference"/>
+		<attr name="items" format="reference"/>
+		<attr name="data_source" format="reference"/>
+	</declare-styleable>
 </resources>

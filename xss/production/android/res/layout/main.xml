@@ -1,50 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.xkp.android.SimpleTest.XKPLayout 
-	xmlns:android="http://schemas.android.com/apk/res/android" 
-	xmlns:xkp="http://schemas.android.com/apk/res/com.xkp.android.SimpleTest" 
-	android:id="@+id/mainApplication" 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:xkp="http://schemas.android.com/apk/res/com.xkp.android.SimpleTest" 
+    android:id="@+id/mainLayoutApplication" 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-    	<TextView android:id="@+id/lblFullName" 
-        	android:text="Your fullname is "
-        	xkp:layout_x="10px"
-        	xkp:layout_y="130px"
-        	android:layout_width="200px"
-        	android:layout_height="30px"
-        	/>
-    	<Button android:id="@+id/btnFullName" 
-        	android:text="Resolve FullName"
-        	xkp:layout_x="10px"
-        	xkp:layout_y="90px"
-        	android:layout_width="100px"
-        	android:layout_height="33px"
-        	/>
-    	<EditText android:id="@+id/edtLastName" 
-        	xkp:layout_x="120px"
-        	xkp:layout_y="50px"
-        	android:layout_width="150px"
-        	android:layout_height="30px"
-        	/>
-    	<TextView android:id="@+id/lblLastName" 
-        	android:text="Enter lastname: "
-        	xkp:layout_x="10px"
-        	xkp:layout_y="50px"
-        	android:layout_width="140px"
-        	android:layout_height="30px"
-        	/>
-    	<EditText android:id="@+id/edtFirstName" 
-        	xkp:layout_x="120px"
-        	xkp:layout_y="10px"
-        	android:layout_width="150px"
-        	android:layout_height="30px"
-        	/>
-    	<TextView android:id="@+id/lblFirstName" 
-        	android:text="Enter firstname: "
-        	xkp:layout_x="10px"
-        	xkp:layout_y="10px"
-        	android:layout_width="140px"
-        	android:layout_height="30px"
-        	/>
+        >
+            <TextView android:id="@+id/lblFirstName"
+                android:text="@string/res9"
+                xkp:layout_x="10px"
+                xkp:layout_y="10px"
+                android:layout_width="140px"
+                android:layout_height="30px"
+                >
+            </TextView>
+            <EditText android:id="@+id/edtFirstName"
+                xkp:layout_x="120px"
+                xkp:layout_y="10px"
+                android:layout_width="150px"
+                android:layout_height="30px"
+                >
+            </EditText>
+            <TextView android:id="@+id/lblLastName"
+                android:text="@string/res8"
+                xkp:layout_x="10px"
+                xkp:layout_y="50px"
+                android:layout_width="140px"
+                android:layout_height="30px"
+                >
+            </TextView>
+            <EditText android:id="@+id/edtLastName"
+                xkp:layout_x="120px"
+                xkp:layout_y="50px"
+                android:layout_width="150px"
+                android:layout_height="30px"
+                >
+            </EditText>
+            <Button android:id="@+id/btnFullName"
+                android:text="@string/res7"
+                xkp:layout_x="10px"
+                xkp:layout_y="90px"
+                android:layout_width="100px"
+                android:layout_height="33px"
+                >
+            </Button>
+            <TextView android:id="@+id/lblFullName"
+                android:text="@string/res6"
+                xkp:layout_x="10px"
+                xkp:layout_y="130px"
+                android:layout_width="200px"
+                android:layout_height="30px"
+                >
+            </TextView>
+            <com.xkp.android.SimpleTest.XKPSwitcher android:id="@+id/swtExchange"
+                xkp:layout_x="10px"
+                xkp:layout_y="150px"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                >
+                    <Button android:id="@+id/btn1"
+                        android:text="@string/res5"
+                        xkp:layout_x="5px"
+                        xkp:layout_y="5px"
+                        android:layout_width="50px"
+                        android:layout_height="33px"
+                        >
+                    </Button>
+                    <com.xkp.android.SimpleTest.XKPLayout android:id="@+id/div1"
+                        xkp:layout_x="5px"
+                        xkp:layout_y="5px"
+                        android:layout_width="100px"
+                        android:layout_height="80px"
+                        >
+                            <Button android:id="@+id/btn2"
+                                android:text="@string/res4"
+                                xkp:layout_x="5px"
+                                xkp:layout_y="5px"
+                                android:layout_width="60px"
+                                android:layout_height="33px"
+                                >
+                            </Button>
+                            <TextView android:id="@+id/lbl1"
+                                android:text="@string/res3"
+                                xkp:layout_x="5px"
+                                xkp:layout_y="45px"
+                                android:layout_width="80px"
+                                android:layout_height="30px"
+                                >
+                            </TextView>
+                    </com.xkp.android.SimpleTest.XKPLayout>
+                    <CheckBox android:id="@+id/chk1"
+                        xkp:layout_x="5px"
+                        xkp:layout_y="5px"
+                        android:layout_width="90px"
+                        android:layout_height="33px"
+                        >
+                    </CheckBox>
+                    <Button android:id="@+id/btn3"
+                        android:text="@string/res2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35px"
+                        xkp:placement="Placement.bottom"
+                        >
+                    </Button>
+            </com.xkp.android.SimpleTest.XKPSwitcher>
+            <com.xkp.android.SimpleTest.XKPReplicator android:id="@+id/rep"
+                xkp:template="@+id/template1"
+                xkp:layout_x="20px"
+                xkp:layout_y="50px"
+                android:layout_width="200px"
+                android:layout_height="200px"
+                >
+                    <com.xkp.android.SimpleTest.XKPLayout android:id="@+id/template1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24px"
+                        xkp:placement="Placement.top"
+                        >
+                            <TextView android:id="@+id/name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                xkp:placement="Placement.left"
+                                >
+                            </TextView>
+                            <TextView android:id="@+id/value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                xkp:placement="Placement.right"
+                                >
+                            </TextView>
+                    </com.xkp.android.SimpleTest.XKPLayout>
+            </com.xkp.android.SimpleTest.XKPReplicator>
 </com.xkp.android.SimpleTest.XKPLayout>
 
