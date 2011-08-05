@@ -103,6 +103,7 @@ str java_idiom::translate_type(schema* type)
       }
     else if (type->options() & TYPE_ITERATED)
       {
+        //td: especialize with generic ArrayList<type>
         str_type = "ArrayList";
       }
     else if (type == type_schema<int>())
@@ -369,5 +370,71 @@ str java_expression_renderer::array_operation(str lopnd, str ropnd, operator_typ
     else if (op == op_minus_equal)
       result = lopnd + ".remove(" + ropnd + ")"; //td: verify correct object erase
 
+    return result;
+  }
+
+str java_expression_renderer::operand_to_string(variant operand, XSSObject parent, int* prec)
+  {
+    str result;
+    int result_prec = 0;
+    if (operand.is<expression_identifier>())
+      {
+        expression_identifier ei = operand;
+        result = ei.value;
+
+        if (!parent)
+          {
+            //here we ought to resolve a single symbol (ex width = 10)
+            //thid *could* belong to the "this" pointer
+
+            str separator = ctx_->idiom_->resolve_separator();
+            if (ctx_->idiom_)
+              {
+                XSSProperty prop = ctx_->get_property(ei.value);
+								XSSMethod mthd = ctx_->get_method(ei.value);
+                if (prop)
+                  {
+										result = prop->resolve_value();
+                  }
+								else if (mthd)
+                  {
+                    str this_str = ctx_->idiom_->resolve_this(ctx_);
+                    if (!this_str.empty())
+                      result = this_str + separator + ei.value; //otherwise it doesnt get translated
+                  }
+				        else
+				          {
+					          //another use case, we might have an instance that has an internal id
+					          //which means a name to be used in code instead of the plain instance name
+					          XSSObject obj = ctx_->resolve_instance(result);
+					          if (obj && obj->has("internal_id"))
+						          {
+							          result = variant_cast<str>(dynamic_get(obj, "internal_id"), str());
+
+                        // so i need some internal_id emptys
+                        //assert(!result.empty());
+						          }
+				          }
+              }
+          }
+      }
+    else if (operand.is<already_rendered>())
+      {
+        already_rendered ar = operand;
+        result = ar.value;
+        result_prec = ar.precedence;
+      }
+    else if (operand.is<str>())
+      {
+        str opstr = operand;
+        result = '"' + opstr + '"';
+      }
+    else
+      {
+        str opstr = operand;
+        result = opstr;
+      }
+
+    if (prec) *prec = result_prec;
     return result;
   }

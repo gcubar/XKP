@@ -1,4 +1,4 @@
-package com.xkp.android.<xss:e value="appName"/>;
+package com.xkp.android.Contacts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -259,11 +259,11 @@ public class XKPLayout extends ViewGroup {
 		/*
 		 * Autoadjust width measures when a new component is added to a ViewGroup.
 		 */
-		private boolean autosize_x;
+		public boolean autosize_x;
 		/**
 		 * Autoadjust height measures when a new component is added to a ViewGroup.
 		 */
-		private boolean autosize_y;
+		public boolean autosize_y;
 		/**
 		 * Reference to parent XKPLayout.
 		 */
@@ -313,21 +313,21 @@ public class XKPLayout extends ViewGroup {
 			
 			TypedArray a = c.obtainStyledAttributes(attrs,
 					R.styleable.XKPLayout);
-			this.x = a.getDimensionPixelOffset(
+			x = a.getDimensionPixelOffset(
 					R.styleable.XKPLayout_layout_x, 0);
-			this.y = a.getDimensionPixelOffset(
+			y = a.getDimensionPixelOffset(
 					R.styleable.XKPLayout_layout_y, 0);
-			this.autosize_x = a.getBoolean(
+			autosize_x = a.getBoolean(
 					R.styleable.XKPLayout_autosize_x, false);
-			this.autosize_y = a.getBoolean(
+			autosize_y = a.getBoolean(
 					R.styleable.XKPLayout_autosize_y, false);
 			int pl = a.getInt(
 					R.styleable.XKPLayout_placement, 0);
 			
 			a.recycle();
 			
-			this.origins = new Rect(x, y, width, height);
-			this.parentXkpLayout = layRef;
+			origins = new Rect(x, y, width, height);
+			parentXkpLayout = layRef;
 			setPlacement(pl);
 			
 			Log.i("XKPLayout", "LayoutParams => x:" + x + " y:" + y +
@@ -345,79 +345,29 @@ public class XKPLayout extends ViewGroup {
 			}
 			
 			pl %= PL_MAX_VALUE;
-			this.placement = pl;
+			placement = pl;
 			
 			if (parentXkpLayout != null) {
 				parentXkpLayout.requestLayout();
 			}
 		}
 		
-		public boolean getAutoSizeX() {
-			return autosize_x;
-		}
-		
-		public boolean getAutoSizeY() {
-			return autosize_y;
-		}
-		
-		public void setAutoSizeX(boolean value) {
-			this.autosize_x = value;
-			
-			if (parentXkpLayout != null) {
-				parentXkpLayout.requestLayout();
-			}
-		}
-		
-		public void setAutoSizeY(boolean value) {
-			this.autosize_y = value;
-			
-			if (parentXkpLayout != null) {
-				parentXkpLayout.requestLayout();
-			}
-		}
-		
-		public void setLeft(int left) {
-			this.x = left;
-			
-			if (parentXkpLayout != null) {
-				parentXkpLayout.requestLayout();
-			}
-		}
-		
-		public void setTop(int top) {
-			this.y = top;
-			
-			if (parentXkpLayout != null) {
-				parentXkpLayout.requestLayout();
-			}
-		}
-		
-		public void setWidth(int width) {
-			this.width = width;
-			
-			if (parentXkpLayout != null) {
-				parentXkpLayout.requestLayout();
-			}
-		}
-		
-		public void setHeight(int height) {
-			this.height = height;
-			
-			if (parentXkpLayout != null) {
-				parentXkpLayout.requestLayout();
-			}
+		public void setLayout(int l, int t, int w, int h) {
+			// set layout of custom childs and 
+			// update real position and dimensions
 		}
 		
 		public LayoutParams(XKPLayout.LayoutParams source) {
 			super(source);
 			
-			this.x = source.x;
-			this.y = source.y;
-			this.autosize_x = source.autosize_x;
-			this.autosize_y = source.autosize_y;
-			this.placement = source.placement;
-			this.origins = new Rect(source.origins);
-			this.parentXkpLayout = source.parentXkpLayout;
+			x = source.x;
+			y = source.y;
+			autosize_x = source.autosize_x;
+			autosize_y = source.autosize_y;
+			placement = source.placement;
+			origins = new Rect(source.origins);
+			parentXkpLayout = source.parentXkpLayout;
 		}
 	}
 }
+

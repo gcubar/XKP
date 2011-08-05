@@ -65,7 +65,8 @@ struct java_expression_renderer : expression_renderer
 
     //expression_visitor
     virtual void exec_operator(operator_type op, int pop_count, int push_count, bool top);
-
+    
+    virtual str operand_to_string(variant operand, XSSObject parent = XSSObject(), int* prec = null);
     virtual str array_operation(str lopnd, str ropnd, operator_type op);
   };
 

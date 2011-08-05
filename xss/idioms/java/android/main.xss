@@ -1,35 +1,82 @@
 <xss:code>
-	string appName = "SimpleTest";
+	string appName = application.name;
 	string outputPath = compiler.path.system_complete;
-	array<object> allResources = [];
 	int sdkVersion = compiler.options.targetSdkVersion;
 	int minSDKVersion = 4;
-	int resCounter = 0;
 	
 	//ERROR: if this array is not initialized then make a console error: "Trying to access null object"
 	//array<string> imports;
+	
 	array<string> imports = [];
+	array<string> interfaces = [];
+	array<string> events = [];
+	array<string> ev_args = [];
 	
 	for(var inst in instances)
 	{
-		if(inst.import && !inst.internal)
+		inst.internal_id = "priv_" + inst.id;
+		
+		//find necessary imports without duplicates
+		if(inst.imports && !inst.xkpview)
 		{
 			//TIPS: live is hard; :)
 			//it's necessary to implement vector, stack, queue and set containers in vm
-			bool found = false;
-			for(var imp in imports)
+			for(int c = 0; c < inst.imports.size; c++)
 			{
-				if(imp == inst.import)
+				string import = inst.imports[c].name;
+				
+				//compiler.log(import);
+				bool fd1 = false;
+				for(var imp in imports)
 				{
-					found = true;
-					break;
+					if(imp == import)
+					{
+						fd1 = true;
+						break;
+					}
+				}
+				
+				if(!fd1)
+					imports += import;
+			}
+		}
+		
+		//find necessary events interfaces without duplicates
+		for(var e in inst.events)
+		{
+			if(e.interface && e.implemented)
+			{
+				bool fd2 = false;
+				for(var i in interfaces)
+				{
+					if(i == e.interface)
+					{
+						fd2 = true;
+						break;
+					}
+				}
+				
+				if(!fd2)
+				{
+					//ERROR: Console error with "Error while compiling xs"
+					//object item = object(
+					//				interface = e.interface,
+					//				event = e.event_name);
+					//....and more
+					//object item = object(interface = "", event = "");
+					//item.interface = e.interface;
+					//item.event = e.event_name;
+					
+					interfaces += e.interface;
+					events += e.event_name;
+					ev_args += e.args;
 				}
 			}
-			
-			if(!found)
-				imports += inst.import;
 		}
 	}
+	
+	//TODO: remember evaluate the path of xss:file output....
+	//      output="src/com/xkp/android/<xss:e value='appName'/Act<xss:e value='appName'/>>"
 	
 	out()
 	{
@@ -39,27 +86,28 @@
 			<parameter name="minSDKVersion" access="read"/>
 		</xss:file>
 		
-		<xss:file output="src/com/xkp/android/SimpleTest/ActSimpleTest.java" src="mainActivity.java.xss">
+		<xss:file output="src/com/xkp/android/Contacts/ActContacts.java" src="mainActivity.java.xss">
 			<parameter name="appName" access="read"/>
 			<parameter name="imports" access="read"/>
+			<parameter name="interfaces" access="read"/>
+			<parameter name="events" access="read"/>
+			<parameter name="ev_args" access="read"/>
 		</xss:file>
 		
-		<xss:file output="src/com/xkp/android/SimpleTest/XKPLayout.java" src="xkpLayout.java.xss">
+		<xss:file output="src/com/xkp/android/Contacts/XKPLayout.java" src="xkpLayout.java.xss">
 			<parameter name="appName" access="read"/>
 		</xss:file>
 		
-		<xss:file output="src/com/xkp/android/SimpleTest/XKPSwitcher.java" src="xkpSwitcher.java.xss">
+		<xss:file output="src/com/xkp/android/Contacts/XKPSwitcher.java" src="xkpSwitcher.java.xss">
 			<parameter name="appName" access="read"/>
 		</xss:file>
 		
-		<xss:file output="src/com/xkp/android/SimpleTest/XKPReplicator.java" src="xkpReplicator.java.xss">
+		<xss:file output="src/com/xkp/android/Contacts/XKPReplicator.java" src="xkpReplicator.java.xss">
 			<parameter name="appName" access="read"/>
 		</xss:file>
 		
 		<xss:file output="res/values/strings.xml" src="stringValues.xml.xss">
 			<parameter name="appName" access="read"/>
-			<parameter name="resCounter" access="read_write"/>
-			<parameter name="allResources" access="read_write"/>
 		</xss:file>
 		
 		<xss:file output="res/layout/main.xml" src="mainLayout.xml.xss">

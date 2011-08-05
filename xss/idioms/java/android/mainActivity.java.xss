@@ -1,35 +1,55 @@
-package com.xkp.android.SimpleTest;
+package com.xkp.android.<xss:e value="appName"/>;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 <xss:code>
 	for(var imp in imports)
 	{
 		out(indent = 0)
 		{
-            import android.widget.<xss:e value="imp"/>;
+            import <xss:e value="imp"/>;
 		}
 	}
 </xss:code>
 
-public class ActSimpleTest 
+public class Act<xss:e value="appName"/> 
                 extends Activity
 <xss:code>
-	//TODO: add here the interface of component/view events
+	if(interfaces.size > 0)
+	{
+		out(dont_break = true, indent = 2)
+		{
+			implements <xss:e value="interfaces[0]"/>
+		}
+	}
+	
+	for(int i = 1; i < interfaces.size; i++)
+	{
+		var ifc = interfaces[i];
+		if(ifc != null)
+			out(dont_break = true, indent = 0)
+			{
+                , <xss:e value="ifc"/>
+			}
+	}
 </xss:code>
 				
 {
 <xss:code>
 	for(var inst in instances)
 	{
-		if(inst.import == null)
+		if(inst.name == null)
 			continue;
 		
 		if(inst.id && inst.id != "application")
 		{
 			out(indent = 1)
 			{
-                private <xss:e value="inst.import"/> priv_<xss:e value="inst.id"/>;
+                private <xss:e value="inst.name"/> priv_<xss:e value="inst.id"/>;
 			}
 		}
 	}
@@ -41,36 +61,217 @@ public class ActSimpleTest
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-		bindViews();
-	}
+        bindViews();
+    }
 	
-	private void bindViews() {
+    private void bindViews() {
 <xss:code>
 	for(var inst in instances)
 	{
-		if(inst.import == null)
+		if(inst.name == null)
 			continue;
 		
 		if(inst.id && inst.id != "application")
 		{
 			out(indent = 2)
 			{
-				priv_<xss:e value="inst.id"/> = (<xss:e value="inst.import"/>) findViewById(R.id.<xss:e value="inst.id"/>);
+                this.priv_<xss:e value="inst.id"/> = (<xss:e value="inst.name"/>) findViewById(R.id.<xss:e value="inst.id"/>);
+			}
+		}
+		
+		for(var e in inst.events)
+		{
+			if(e.interface && e.implemented)
+			{
+				out(indent = 2)
+				{
+                    this.priv_<xss:e value="inst.id"/>.set<xss:e value="e.interface"/>(this);
+				}
 			}
 		}
 	}
 </xss:code>
-
-<xss:code>
-</xss:code>
     }
 	
 <xss:code>
-	if(true)
+	if(events.size > 0)
 	{
-		//TODO: if exists onClick events add a method with a switch structure
-		//      and in each case a call of correspond method, 
-		//      then implement methods with translated codes.
+		for(int i = 0; i < events.size; i++)
+		{
+			//ERROR: this assign value dispatch console errors "Incompatible types assigning a local variable"
+			//string ev = events[i];
+			
+			string ev;
+            ev = events[i];
+			string args;
+            args = ev_args[i];
+			
+			//TODO: implements call to arguments from classes by event name
+			out(indent = 1)
+			{
+                @Override
+                public void <xss:e value="ev"/>(<xss:e value="args"/>) <xss:open_brace/>
+                    switch (v.getId()) <xss:open_brace/>
+			}
+			
+			for(var inst in instances)
+			{
+				for(var e in inst.events)
+				{
+					if(e.event_name == ev && e.implemented)
+					{
+						out(indent = 2)
+						{
+                            case R.id.<xss:e value="inst.id"/>:
+                                <xss:e value="ev"/><xss:e value="inst.id"/>();
+                                break;
+								
+						}
+					}
+				}
+			}
+			
+			out(indent = 1)
+			{
+                    <xss:close_brace/> //switch
+                <xss:close_brace/>
+				<xss:return/>
+			}
+		}
+	}
+</xss:code>
+<xss:code>	
+	for(var inst in instances)
+	{
+		if(inst.events)
+		{
+			for(var e in inst.events)
+			{
+				if(!e.implemented || !e.event_name)
+					continue;
+				
+				out(indent = 1)
+				{
+					private void <xss:e value="e.event_name"/><xss:e value="inst.id"/>() <xss:open_brace/>
+				}
+				
+				for(var impl in e.impls)
+				{
+					out(indent = 2)
+					{
+						<xss:e>impl.generate()</xss:e>
+					}
+				}
+				
+				out(indent = 1)
+				{
+					<xss:close_brace/>
+					<xss:return/>
+				}
+			}
+		}
+		
+		if(inst.methods)
+		{
+			for(var m in inst.methods)
+			{
+				string mthd_type = "void";
+				
+				if(m.type != "")
+					mthd_type = m.type;
+				
+				out(indent = 1)
+				{
+					public <xss:e value="mthd_type"/> <xss:e value="m.name"/>(<xss:e value="m.args.generate()"/>) <xss:open_brace/>
+				}
+				
+				out(indent = 2)
+				{
+					<xss:e>m.code.generate()</xss:e>
+				}
+				
+				out(indent = 1)
+				{
+					<xss:close_brace/>
+					<xss:return/>
+				}
+			}
+		}
+		
+		if(inst.properties)
+		{
+			for(var p in inst.properties)
+			{
+				string prop_type = "Object";
+				
+				if(p.type != null)
+					prop_type = p.type;
+				
+				if(p.set && p.get)
+				{
+					out(indent = 1)
+					{
+						public <xss:e value="prop_type"/> <xss:e value="p.name"/>_get() <xss:open_brace/>
+							<xss:e>p.get.generate()</xss:e>
+						<xss:close_brace/>
+						
+						public void <xss:e value="p.name"/>_set(<xss:e value="prop_type"/> value) <xss:open_brace/>
+							<xss:e>p.set.generate()</xss:e>
+						</xss:close_brace/>
+					}
+				}
+				else
+				if(p.set)
+				{
+					out(indent = 1)
+					{
+						private <xss:e value="prop_type"/> <xss:e value="p.name"/> = <xss:e value="p.generate_value()"/>
+						
+						public void <xss:e value="p.name"/>_set(<xss:e value="prop_type"/> value) <xss:open_brace/>
+							<xss:e value="p.name"> = value;
+							<xss:e>p.set.generate()</xss:e>
+						<xss:close_brace/>
+					}
+				}
+				else
+				if(p.get)
+				{
+					out(indent = 1)
+					{
+						public <xss:e value="prop_type"/> <xss:e value="p.name"/>_get() <xss:open_brace/>
+							<xss:e>p.get.generate()</xss:e>
+						<xss:close_brace/>
+					}
+				}
+				else
+				{
+					if(p.set_fn == null && p.get_fn == null && 
+					   p.get_xss == null && p.set_xss == null)
+					{
+						var value = compiler.evaluate_property(inst, p.name);
+						if(value != null)
+						{
+							value = p.generate_value();
+						}
+						
+						out(dont_break = true, indent = 1)
+						{
+							private <xss:e value="p.type"/> <xss:e value="p.name"/>
+						}
+						
+						if(value != null)
+						{
+							out(indent = 0)
+							{
+								= <xss:e value="value"/>;
+							}
+						}
+						
+						out() { <xss:return/> }
+					}
+				}
+			}
+		}
 	}
 </xss:code>
 }

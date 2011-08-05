@@ -1,4 +1,4 @@
-package com.xkp.android.<xss:e value="appName"/>;
+package com.xkp.android.Contacts;
 
 import java.util.ArrayList;
 
@@ -94,3 +94,4 @@ public class XKPReplicator extends XKPLayout {
 	}
 	
 }
+

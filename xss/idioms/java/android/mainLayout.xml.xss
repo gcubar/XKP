@@ -21,18 +21,18 @@
 		//       if(view != application)
 		
 		string strViewName = "";
-		if(view.internal)
+		if(view.xkpview)
 			strViewName = "com.xkp.android." + appName + ".";
 			
 		//ERROR: it's impossible, i'm angry with this, neither work :(
-		//strViewName += view.import;
-		//strViewName = strViewName + view.import;
+		//strViewName += view.name;
+		//strViewName = strViewName + view.name;
 		
 		if(view.id != application.id)
 		{
 			out(indent = ind)
 			{
-                <<xss:e value="strViewName"/><xss:e value="view.import"/> android:id="@+id/<xss:e value="view.id"/>"
+                <<xss:e value="strViewName"/><xss:e value="view.name"/> android:id="@+id/<xss:e value="view.id"/>"
 			}
 		}
 		
@@ -75,7 +75,7 @@
 		{
 			out(indent = ind)
 			{
-                </<xss:e value="strViewName"/><xss:e value="view.import"/>>
+                </<xss:e value="strViewName"/><xss:e value="view.name"/>>
 			}
 		}
 	}
@@ -93,7 +93,8 @@
 				defaultAssigned = true;
 			}
 			
-			if(prop.value == null || prop.nolayout)
+			if(prop.value == null || prop.nolayout ||
+				prop.ns == null || prop.layout_name == null)
 				continue;
 		
 			string assignValue;

@@ -7,7 +7,7 @@
     android:layout_height="fill_parent"
         >
             <TextView android:id="@+id/lblFirstName"
-                android:text="@string/res9"
+                android:text="@string/res8"
                 xkp:layout_x="10px"
                 xkp:layout_y="10px"
                 android:layout_width="140px"
@@ -22,7 +22,7 @@
                 >
             </EditText>
             <TextView android:id="@+id/lblLastName"
-                android:text="@string/res8"
+                android:text="@string/res7"
                 xkp:layout_x="10px"
                 xkp:layout_y="50px"
                 android:layout_width="140px"
@@ -37,7 +37,7 @@
                 >
             </EditText>
             <Button android:id="@+id/btnFullName"
-                android:text="@string/res7"
+                android:text="@string/res6"
                 xkp:layout_x="10px"
                 xkp:layout_y="90px"
                 android:layout_width="100px"
@@ -45,7 +45,7 @@
                 >
             </Button>
             <TextView android:id="@+id/lblFullName"
-                android:text="@string/res6"
+                android:text="@string/res5"
                 xkp:layout_x="10px"
                 xkp:layout_y="130px"
                 android:layout_width="200px"
@@ -59,7 +59,7 @@
                 android:layout_height="100px"
                 >
                     <Button android:id="@+id/btn1"
-                        android:text="@string/res5"
+                        android:text="@string/res4"
                         xkp:layout_x="5px"
                         xkp:layout_y="5px"
                         android:layout_width="50px"
@@ -73,7 +73,7 @@
                         android:layout_height="80px"
                         >
                             <Button android:id="@+id/btn2"
-                                android:text="@string/res4"
+                                android:text="@string/res3"
                                 xkp:layout_x="5px"
                                 xkp:layout_y="5px"
                                 android:layout_width="60px"
@@ -81,7 +81,7 @@
                                 >
                             </Button>
                             <TextView android:id="@+id/lbl1"
-                                android:text="@string/res3"
+                                android:text="@string/res2"
                                 xkp:layout_x="5px"
                                 xkp:layout_y="45px"
                                 android:layout_width="80px"
@@ -90,6 +90,7 @@
                             </TextView>
                     </com.xkp.android.SimpleTest.XKPLayout>
                     <CheckBox android:id="@+id/chk1"
+                        android:text="@string/res1"
                         xkp:layout_x="5px"
                         xkp:layout_y="5px"
                         android:layout_width="90px"
@@ -97,7 +98,7 @@
                         >
                     </CheckBox>
                     <Button android:id="@+id/btn3"
-                        android:text="@string/res2"
+                        android:text="@string/res0"
                         android:layout_width="wrap_content"
                         android:layout_height="35px"
                         xkp:placement="Placement.bottom"

@@ -1,7 +1,8 @@
 <xml>
 	<class id="application">
 		<properties>
-			<property name="title" nolayout="true" type="string"/>
+			<property name="title" nolayout="true" type="string" set_fn="setTitle" get_fn="getTitle"/>
+			<property name="name" nolayout="true" type="string" set_fn="setName" get_fn="getName"/>
 		</properties>
 	</class>
 	
@@ -17,20 +18,40 @@
 		</properties>
 	</class>
 	
+	<class id="Listeners" nolayout="true">
+		<properties>
+			<property name="click" event_name="onClick" interface="OnClickListener" args="View v"/>
+			<property name="keydown" event_name="onKey" interface="OnKeyListener" args="View v, int keyCode, KeyEvent event"/>
+			<property name="drag" event_name="onDrag" interface="OnDragListener" args="View v, DragEvent event"/>
+		</properties>
+	</class>
+	
 	<class id="widget">
 		<properties>
-			<property name="x" layout_name="layout_x" ns="xkp" type="int" res_type="dimension"/>
-			<property name="y" layout_name="layout_y" ns="xkp" type="int" res_type="dimension"/>
+			<property name="x" layout_name="layout_x" ns="xkp" type="int" res_type="dimension" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setLeft" get_fn="getLeft"/>
+			<property name="y" layout_name="layout_y" ns="xkp" type="int" res_type="dimension" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setTop" get_fn="getTop"/>
 			
 			<!-- fill_parent == match_parent and wrap_content  -->
 			<!-- fill_parent is deprecated after android api 8 -->
-			<property name="width" layout_name="layout_width" default_value="wrap_content" ns="android" type="int" res_type="dimension"/>
-			<property name="height" layout_name="layout_height" default_value="wrap_content" ns="android" type="int" res_type="dimension"/>
+			<property name="width" layout_name="layout_width" default_value="wrap_content" ns="android" type="int" res_type="dimension" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setWidth" get_fn="getWidth"/>
+			<property name="height" layout_name="layout_height" default_value="wrap_content" ns="android" type="int" res_type="dimension" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setHeight" get_fn="getHeight"/>
 			
-			<property name="placement" layout_name="placement" ns="xkp" type="enum"/>
+			<property name="placement" layout_name="placement" ns="xkp" type="enum" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setPlacement" 
+				property_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).getPlacement()"/>
 			
-			<property name="autosize_x" layout_name="autosize_x" ns="xkp" type="bool"/>
-			<property name="autosize_y" layout_name="autosize_y" ns="xkp" type="bool"/>
+			<property name="autosize_x" layout_name="autosize_x" ns="xkp" type="bool" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setAutoSizeX" 
+				get_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).getAutoSizeX()"/>
+			<property name="autosize_y" layout_name="autosize_y" ns="xkp" type="bool" 
+				set_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).setAutoSizeY" 
+				get_xss="((XKPLayout.LayoutParams) <xss:e v='path'/>.getLayoutParams()).getAutoSizeY()"/>
+			
+			<property name="enabled" layout_name="enabled" ns="android" type="bool" set_fn="setEnabled" get_fn="isEnabled"/>
 			
 			<!-- top, bottom, left, right, center_vertical, fill_vertical, center_horizontal, fill_horizontal, center, fill, clip_vertical, clip_horizontal-->
 			<!--
@@ -42,62 +63,88 @@
 		</properties>
 	</class>
 	
-	<class id="label" super="widget" import="TextView">
+	<class id="textview" super="widget">
+		<imports>
+			<import name="android.view.View.OnClickListener"/>
+		</imports>
 		<properties>
-			<property name="caption" layout_name="text" ns="android" type="string" res_type="str_reference"/>
-		</properties>
-	</class>
-	
-	<class id="button" super="widget" import="Button">
-		<properties>
-			<property name="caption" layout_name="text" ns="android" type="string" res_type="str_reference"/>
+			<property name="caption" layout_name="text" ns="android" type="string" res_type="str_reference" set_fn="setText" get_fn="getText"/>
 		</properties>
 		<events>
-			<event name="click" event_name="onClick" interface="OnClickListener"/>
+			<event name="click" event_name="onClick" interface="OnClickListener" args="View v"/>
 		</events>
 	</class>
 	
-	<class id="editbox" super="widget" import="EditText">
+	<class id="label" super="textview" name="TextView">
+		<imports>
+			<import name="android.widget.TextView"/>
+		</imports>
+	</class>
+	
+	<class id="button" super="textview" name="Button">
+		<imports>
+			<import name="android.widget.Button"/>
+		</imports>
+	</class>
+	
+	<class id="checkbox" super="textview" name="CheckBox">
+		<imports>
+			<import name="android.widget.CheckBox"/>
+			<import name="android.widget.CompoundButton"/>
+			<import name="android.widget.CompoundButton.OnCheckedChangeListener"/>
+		</imports>
+		<properties>
+			<property name="checked" layout_name="checked" ns="android" set_fn="setChecked" get_fn="isChecked"/>
+		</properties>
+		<events>
+			<event name="change" event_name="onCheckedChanged" interface="OnCheckedChangeListener" args="CompoundButton v, boolean isChecked"/>
+		</events>
+	</class>
+	
+	<class id="radiobutton" super="textview" name="RadioButton">
+		<imports>
+			<import name="android.widget.RadioButton"/>
+		</imports>
+	</class>
+	
+	<class id="editbox" super="widget" name="EditText">
+		<imports>
+			<import name="android.widget.EditText"/>
+		</imports>
+		<properties>
+			<property name="text" layout_name="text" ns="android" type="string" res_type="str_reference" set_fn="setText" get_xss="getText().toString()"/>
+		</properties>
+	</class>
+	
+	<class id="listbox" super="widget" name="ListView">
+		<imports>
+			<import name="android.widget.ListView"/>
+		</imports>
 		<properties>
 		</properties>
 	</class>
 	
-	<class id="listbox" super="widget" import="ListView">
-		<properties>
-		</properties>
-	</class>
-	
-	<class id="checkbox" super="widget" import="CheckBox">
-		<properties>
-		</properties>
-	</class>
-	
-	<class id="radiobutton" super="widget" import="RadioButton">
-		<properties>
-		</properties>
-	</class>
-	
-	<class id="holder" super="widget" internal="true" import="XKPLayout">
+	<class id="holder" super="widget" xkpview="true" name="XKPLayout">
 	</class>
 	
 	<class id="div" super="holder">
 	</class>
 	
-	<class id="switcher" super="widget" internal="true" import="XKPSwitcher">
+	<class id="switcher" super="widget" xkpview="true" name="XKPSwitcher">
 		<properties>
-			<property name="active" layout_name="current" ns="xkp" type="string" res_type="id_reference"/>
-			<property name="active_index" layout_name="currentIndex" ns="xkp" type="int"/>
+			<property name="active" layout_name="current" ns="xkp" type="string" res_type="id_reference" set_fn="setDisplayedChildByName" get_fn="getDisplayedChildByName"/>
+			<property name="active_index" layout_name="currentIndex" ns="xkp" type="int" set_fn="setDisplayedChild" get_fn="getDisplayedChild"/>
 		</properties>
 	</class>
 	
-	<class id="replicator" super="widget" internal="true" import="XKPReplicator">
+	<class id="replicator" super="widget" xkpview="true" name="XKPReplicator">
 		<properties>
 			<property name="template" layout_name="template" ns="xkp" type="string" res_type="id_reference"/>
 			<property name="items" layout_name="items" ns="xkp" type="array"/>
 		</properties>
 	</class>
 	
-	<class id="image" super="widget" import="ImageView">
+	<class id="image" super="widget" name="ImageView">
 		<properties>
 			<property name="source" layout_name="src" ns="android" type="string" res_type="drawable"/>
 		</properties>

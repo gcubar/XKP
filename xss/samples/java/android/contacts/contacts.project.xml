@@ -2,7 +2,7 @@
     <path generator="../../../../idioms/java/android/main.xss"
           class_library="../../../../idioms/java/android/classes.xml"
           source_path=""
-          output_path="../../../../production/android/SimpleTest/"/>
+          output_path="../../../../production/android/Contacts/"/>
 
 	<!--
 		DOC: 'eclipse_project' option declare the structure of project exported
@@ -10,7 +10,8 @@
 		
 		TODO: tab character configuration with number of spaces for resolve indent problem
 		TODO: copy files .classpath, default.properties, res/values/attrs.xml
-		TODO: create folders libs, assets, lib, gen, res/drawable-* with files
+		TODO: create folders libs, assets, lib, gen, res/drawable-* with files, 
+		      res/values/attrs, src/com/xkp...
 	-->
 	
     <options gen_event_method="false" 
@@ -19,5 +20,5 @@
 
     <idiom class="java-idiom"/>
 	
-	<application src="simple.xml"/>
+	<application src="contacts.xml"/>
 </xss:project>

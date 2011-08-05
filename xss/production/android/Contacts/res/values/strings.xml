@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Contacts</string>
+    	<string name="res0">Enter Name: </string>
+    	<string name="res1">By Phone: </string>
+    	<string name="res2">By Name: </string>
+    	<string name="res3">Find by: </string>
+    	<string name="res4">Add contact</string>
+    	<string name="res5">Check if contact exists </string>
+    	<string name="res6">Enter phone number: </string>
+    	<string name="res7">Enter full name: </string>
+    	<string name="res8">Find contact</string>
+    	<string name="res9">About</string>
+</resources>
+

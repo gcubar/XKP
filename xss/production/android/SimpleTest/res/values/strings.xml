@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android Simple Test Application</string>
+    	<string name="res0">Bottom</string>
+    	<string name="res1">Check me...!</string>
+    	<string name="res2">Testing...</string>
+    	<string name="res3">Button2</string>
+    	<string name="res4">Button1</string>
+    	<string name="res5">Your fullname is </string>
+    	<string name="res6">Resolve FullName</string>
+    	<string name="res7">Enter lastname: </string>
+    	<string name="res8">Enter firstname: </string>
+</resources>
+
